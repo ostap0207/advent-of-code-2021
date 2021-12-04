@@ -14,6 +14,10 @@ defmodule Solution do
 end
 
 defmodule Test do
+  @input """
+
+  """
+
   def assert(actual, expected) do
     if actual == expected do
       IO.puts("Passed!")
@@ -23,17 +27,13 @@ defmodule Test do
   end
 
   def part1 do
-    """
-
-    """
+    @input
     |> Solution.part1()
     |> assert(0)
   end
 
   def part2 do
-    """
-
-    """
+    @input
     |> Solution.part2()
     |> assert(0)
   end
