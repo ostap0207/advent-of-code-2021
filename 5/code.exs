@@ -22,8 +22,8 @@ defmodule Solution do
 
   def points({x1, y1, x2, y2}) do
     count = max(abs(x2 - x1), abs(y2 - y1))
-    xstep = if x1 != x2, do: floor((x2 - x1) / count), else: 0
-    ystep = if y1 != y2, do: floor((y2 - y1) / count), else: 0
+    xstep = floor((x2 - x1) / count)
+    ystep = floor((y2 - y1) / count)
 
     xpoints = 0..count |> Enum.map(& &1 * xstep + x1)
     ypoints = 0..count |> Enum.map(& &1 * ystep + y1)
