@@ -41,14 +41,10 @@ defmodule Solution do
   end
 
   def parse_line(line) do
-    line
-    |> String.split(" -> ")
-    |> Enum.map(fn coords ->
-      coords
-      |> String.split(",")
-      |> Enum.map(&String.to_integer/1)
-    end)
-    |> List.flatten()
+    [_ | coords] = Regex.run(~r/([0-9]+),([0-9]+) -> ([0-9]+),([0-9]+)/, line)
+
+    coords
+    |> Enum.map(&String.to_integer/1)
     |> List.to_tuple()
   end
 end
