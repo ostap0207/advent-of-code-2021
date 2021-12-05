@@ -30,17 +30,17 @@ defmodule Solution do
   end
 
   defp select_bit(chars, index, condition) do
-    zeros = Enum.filter(chars, fn c -> Enum.at(c, index) == 48 end) |> length()
-    ones = Enum.filter(chars, fn c -> Enum.at(c, index) == 49 end) |> length()
-    if condition.(zeros, ones), do: 48, else: 49
+    zeros = Enum.filter(chars, fn c -> Enum.at(c, index) == ?0 end) |> length()
+    ones = Enum.filter(chars, fn c -> Enum.at(c, index) == ?1 end) |> length()
+    if condition.(zeros, ones), do: ?0, else: ?1
   end
 
   defp filter_bits([result], _index, _condition), do: result
   defp filter_bits(chars, index, condition) do
-    zeros = Enum.filter(chars, fn c -> Enum.at(c, index) == 48 end) |> length()
-    ones = Enum.filter(chars, fn c -> Enum.at(c, index) == 49 end) |> length()
+    zeros = Enum.filter(chars, fn c -> Enum.at(c, index) == ?0 end) |> length()
+    ones = Enum.filter(chars, fn c -> Enum.at(c, index) == ?1 end) |> length()
 
-    required_bit = if condition.(zeros, ones), do: 48, else: 49
+    required_bit = if condition.(zeros, ones), do: ?0, else: ?1
     remaining = Enum.filter(chars, fn c -> Enum.at(c, index) == required_bit end)
     filter_bits(remaining, index + 1, condition)
   end
