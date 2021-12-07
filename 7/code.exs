@@ -1,22 +1,23 @@
 defmodule Solution do
   def part1(input) do
-    lines = parse_input(input) |> IO.inspect()
-    {min, max} = Enum.min_max(lines)
-    min..max |> Enum.map(fn position ->
-      lines |> Enum.map(fn line -> abs(line - position) end) |> Enum.sum()
-    end)
-    |> Enum.min()
+    crabs = parse_input(input)
+    count_fuel(crabs, fn crab, pos -> abs(crab - pos) end)
   end
 
   def part2(input) do
-    lines = parse_input(input)
+    crabs = parse_input(input)
 
-    {min, max} = Enum.min_max(lines)
-    min..max |> Enum.map(fn position ->
-      lines |> Enum.map(fn line ->
-        steps = abs(line - position)
-        (steps + 1) * steps / 2
-      end) |> Enum.sum()
+    count_fuel(crabs, fn crab, pos ->
+      steps = abs(crab - pos)
+      (steps + 1) * steps / 2
+    end)
+  end
+
+  defp count_fuel(crabs, fuel_func) do
+    {min, max} = Enum.min_max(crabs)
+    min..max
+    |> Enum.map(fn pos ->
+      Enum.map(crabs, fn crab -> fuel_func.(crab, pos) end) |> Enum.sum()
     end)
     |> Enum.min()
   end
