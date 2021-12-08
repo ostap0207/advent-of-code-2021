@@ -13,12 +13,14 @@ defmodule Solution do
   def part2(input) do
     lines = parse_input(input)
 
+    permutations = permutations(String.graphemes("abcdefg"))
+
     lines
-    |> Enum.map(&solve/1)
+    |> Enum.map(&solve(&1, permutations))
     |> Enum.sum()
   end
 
-  def solve({examples, digits}) do
+  def solve({examples, digits}, _) do
     initial =
       Enum.reduce(examples, %{}, fn example, initial ->
         case String.length(example) do
@@ -50,6 +52,54 @@ defmodule Solution do
     |> Enum.join()
     |> String.to_integer()
   end
+
+  @map %{
+    "abcefg" => "0",
+    "cf" => "1",
+    "acdeg" => "2",
+    "acdfg" => "3",
+    "bcdf" => "4",
+    "abdfg" => "5",
+    "abdefg" => "6",
+    "acf" => "7",
+    "abcdefg" => "8",
+    "abcdfg" => "9"
+  }
+
+  def solve2({examples, digits}, permutations) do
+    wires =
+      permutations |> Enum.reduce_while(0, fn permutation, _ ->
+        wires = "abcdefg" |> String.graphemes() |> Enum.zip(permutation) |> Enum.into(%{})
+        rewired = rewire(examples, wires)
+
+        if Enum.all?(rewired, fn r -> @map[r] end) do
+          {:halt, wires}
+        else
+          {:cont, 0}
+        end
+      end)
+
+    rewired =
+      digits
+      |> rewire(wires)
+      |> Enum.map(fn digit -> @map[digit] end)
+      |> List.to_string()
+      |> String.to_integer()
+  end
+
+  def rewire(examples, wires) do
+    examples
+    |> Enum.map(fn example ->
+      example
+      |> String.graphemes()
+      |> Enum.map(& wires[&1])
+      |> Enum.sort()
+      |> List.to_string()
+    end)
+  end
+
+  def permutations([]), do: [[]]
+  def permutations(list), do: for elem <- list, rest <- permutations(list--[elem]), do: [elem|rest]
 
   def equal(a, b) do
     minus(a, b) |> Enum.count() == 0 && minus(b, a) |> Enum.count() == 0
