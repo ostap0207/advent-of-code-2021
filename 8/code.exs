@@ -48,7 +48,7 @@ defmodule Solution do
     solution = Enum.with_index([zero, one, two, three, four, five, six, seven, eight, nine])
 
     digits
-    |> Enum.map(fn d -> Enum.find(solution, & equal(elem(&1, 0), d)) |> elem(1) |> Integer.to_string() end)
+    |> Enum.map(fn d -> Enum.find(solution, & equal?(elem(&1, 0), d)) |> elem(1) |> Integer.to_string() end)
     |> Enum.join()
     |> String.to_integer()
   end
@@ -101,15 +101,11 @@ defmodule Solution do
   def permutations([]), do: [[]]
   def permutations(list), do: for elem <- list, rest <- permutations(list--[elem]), do: [elem|rest]
 
-  def equal(a, b) do
-    minus(a, b) |> Enum.count() == 0 && minus(b, a) |> Enum.count() == 0
+  def equal?(a, b) do
+    MapSet.equal?(MapSet.new(String.graphemes(a)), MapSet.new(String.graphemes(b)))
   end
 
-  def minus(a, b) do
-    amapset = String.graphemes(a) |> MapSet.new()
-    bmapset = String.graphemes(b) |> MapSet.new()
-    MapSet.difference(amapset, bmapset)|> Enum.to_list()
-  end
+  def minus(a, b), do: String.graphemes(a) -- String.graphemes(b)
 
   def parse_input(input) do
     input
