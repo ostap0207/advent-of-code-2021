@@ -34,7 +34,7 @@ defmodule Solution do
     0..rows |> Enum.map(fn row ->
       0..cols |> Enum.map(fn col ->
         if Enum.member?(result, {col, row}) do
-          "#"
+          "█"
         else
           " "
         end
