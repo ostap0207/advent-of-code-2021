@@ -22,7 +22,7 @@ defmodule Test do
     if actual == expected do
       IO.puts("Passed!")
     else
-      IO.puts("Expected #{expected}, actual #{actual}")
+      IO.puts("Expected #{inspect(expected)}, actual #{inspect(actual)}")
     end
   end
 
