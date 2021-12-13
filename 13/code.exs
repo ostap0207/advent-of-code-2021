@@ -36,7 +36,7 @@ defmodule Solution do
         if Enum.member?(result, {col, row}) do
           "#"
         else
-          "."
+          " "
         end
       end) |> List.to_string()
     end) |> Enum.join("\n")
