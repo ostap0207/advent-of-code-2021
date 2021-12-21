@@ -87,53 +87,6 @@ defmodule Solution do
   def rotate({x, y, z}, n) when n < 32, do: rotate({y, z, x}, n - 24)
   def rotate({x, y, z}, n) when n < 40, do: rotate({z, x, y}, n - 32)
   def rotate({x, y, z}, n) when n < 48, do: rotate({y, x, z}, n - 40)
-  #
-  # def rotate({x, y, z}, 8), do: rotate({z, y, x}, 0)
-  # def rotate({x, y, z}, 9), do: rotate({z, y, x}, 1)
-  # def rotate({x, y, z}, 10), do: rotate({z, y, x}, 2)
-  # def rotate({x, y, z}, 11), do: rotate({z, y, x}, 3)
-  # def rotate({x, y, z}, 12), do: rotate({z, y, x}, 4)
-  # def rotate({x, y, z}, 13), do: rotate({z, y, x}, 5)
-  # def rotate({x, y, z}, 14), do: rotate({z, y, x}, 6)
-  # def rotate({x, y, z}, 15), do: rotate({z, y, x}, 7)
-  #
-  # def rotate({x, y, z}, 16), do: rotate({x, z, y}, 0)
-  # def rotate({x, y, z}, 17), do: rotate({x, z, y}, 1)
-  # def rotate({x, y, z}, 18), do: rotate({x, z, y}, 2)
-  # def rotate({x, y, z}, 19), do: rotate({x, z, y}, 3)
-  # def rotate({x, y, z}, 20), do: rotate({x, z, y}, 4)
-  # def rotate({x, y, z}, 21), do: rotate({x, z, y}, 5)
-  # def rotate({x, y, z}, 22), do: rotate({x, z, y}, 6)
-  # def rotate({x, y, z}, 23), do: rotate({x, z, y}, 7)
-  #
-  # def rotate({x, y, z}, 24), do: rotate({y, z, x}, 0)
-  # def rotate({x, y, z}, 25), do: rotate({y, z, x}, 1)
-  # def rotate({x, y, z}, 26), do: rotate({y, z, x}, 2)
-  # def rotate({x, y, z}, 27), do: rotate({y, z, x}, 3)
-  # def rotate({x, y, z}, 28), do: rotate({y, z, x}, 4)
-  # def rotate({x, y, z}, 29), do: rotate({y, z, x}, 5)
-  # def rotate({x, y, z}, 30), do: rotate({y, z, x}, 6)
-  # def rotate({x, y, z}, 31), do: rotate({y, z, x}, 7)
-  #
-  # def rotate({x, y, z}, 32), do: rotate({z, x, y}, 0)
-  # def rotate({x, y, z}, 33), do: rotate({z, x, y}, 1)
-  # def rotate({x, y, z}, 34), do: rotate({z, x, y}, 2)
-  # def rotate({x, y, z}, 35), do: rotate({z, x, y}, 3)
-  # def rotate({x, y, z}, 36), do: rotate({z, x, y}, 4)
-  # def rotate({x, y, z}, 37), do: rotate({z, x, y}, 5)
-  # def rotate({x, y, z}, 38), do: rotate({z, x, y}, 6)
-  # def rotate({x, y, z}, 39), do: rotate({z, x, y}, 7)
-  #
-  # def rotate({x, y, z}, 40), do: rotate({y, x, z}, 0)
-  # def rotate({x, y, z}, 41), do: rotate({y, x, z}, 1)
-  # def rotate({x, y, z}, 42), do: rotate({y, x, z}, 2)
-  # def rotate({x, y, z}, 43), do: rotate({y, x, z}, 3)
-  # def rotate({x, y, z}, 44), do: rotate({y, x, z}, 4)
-  # def rotate({x, y, z}, 45), do: rotate({y, x, z}, 5)
-  # def rotate({x, y, z}, 46), do: rotate({y, x, z}, 6)
-  # def rotate({x, y, z}, 47), do: rotate({y, x, z}, 7)
-
-  # def rotate({x, y, z}, n), do: {x, y, z}
 
   def minus({a, b, c}, {a2, b2, c2}) do
     {a - a2, b - b2, c - c2}
