@@ -30,11 +30,11 @@ defmodule Solution do
     if score2 >= 21 do
       {0, 1}
     else
-      Enum.reduce(@rolls, {0, 0}, fn {roll, universes}, {score1_acc, score2_acc} ->
+      Enum.reduce(@rolls, {0, 0}, fn {roll, universes}, {wins1_acc, wins2_acc} ->
         pos1 = pos1 + roll
         pos1 = if rem(pos1, 10) == 0, do: 10, else: rem(pos1, 10)
-        {score2, score1} = play_turn2({score2, pos2}, {score1 + pos1, pos1})
-        {score1_acc + score1 * universes, score2_acc + score2 * universes}
+        {wins2, wins1} = play_turn2({score2, pos2}, {score1 + pos1, pos1})
+        {wins1_acc + wins1 * universes, wins2_acc + wins2 * universes}
       end)
     end
   end
