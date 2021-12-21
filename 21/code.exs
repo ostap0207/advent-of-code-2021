@@ -11,6 +11,11 @@ defmodule Solution do
     plat_turn1(1, {0, 2}, {0, 8})
   end
 
+  def part2(_) do
+    {a, b} = play_turn2({0, 2}, {0, 8})
+    max(a, b)
+  end
+
   def plat_turn1(turn, {score1, pos1}, {score2, pos2}) do
     if score2 > 1000 do
       score1 * (turn - 1)
@@ -21,26 +26,17 @@ defmodule Solution do
     end
   end
 
-  def part2(_input) do
-    {a, b} = play_turn2({0, 2}, {0, 8})
-    max(a, b)
-  end
-
   defmemo play_turn2({score1, pos1}, {score2, pos2}) do
     if score2 >= 21 do
       {0, 1}
     else
-      @rolls |> Enum.reduce({0, 0}, fn {roll, universes}, {score1_acc, score2_acc} ->
+      Enum.reduce(@rolls, {0, 0}, fn {roll, universes}, {score1_acc, score2_acc} ->
         pos1 = pos1 + roll
         pos1 = if rem(pos1, 10) == 0, do: 10, else: rem(pos1, 10)
         {score2, score1} = play_turn2({score2, pos2}, {score1 + pos1, pos1})
         {score1_acc + score1 * universes, score2_acc + score2 * universes}
       end)
     end
-  end
-
-  def parse_input(input) do
-    input |> String.split("\n") |> Enum.filter(& &1 != "")
   end
 end
 
@@ -60,13 +56,13 @@ defmodule Test do
   def part1 do
     @input
     |> Solution.part1()
-    |> assert(1196172)
+    |> assert(1_196_172)
   end
 
   def part2 do
     @input
     |> Solution.part2()
-    |> assert(106768284484217)
+    |> assert(106_768_284_484_217)
   end
 end
 
