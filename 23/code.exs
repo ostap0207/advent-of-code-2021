@@ -18,31 +18,8 @@ defmodule Solution do
     "D" => 8,
   }
 
-  @desired [
-    [],
-    [],
-    ["A", "A", "A", "A"],
-    [],
-    ["B", "B", "B", "B"],
-    [],
-    ["C", "C", "C", "C"],
-    [],
-    ["D", "D", "D", "D"]
-  ]
-
   def part1(input) do
     hallway = [".", ".", "#", ".", "#", ".", "#",  ".", "#",  ".", "."]
-    # levels = [
-    #   [],
-    #   [],
-    #   ["B", "D", "D", "A"],
-    #   [],
-    #   ["C", "C", "B", "D"],
-    #   [],
-    #   ["B", "B", "A", "C"],
-    #   [],
-    #   ["D", "A", "C", "A"]
-    # ]
     levels = [
       [],
       [],
@@ -54,19 +31,7 @@ defmodule Solution do
       [],
       ["A", "A", "C", "C"]
     ]
-    # {hallway, levels, score} = move_from_level("B", 6, 0, 3, hallway, levels, 0) |> IO.inspect()
-    # {hallway, levels, score} = move_rooms("C", {4, 0}, {6, 0}, {hallway, levels, score}) |> IO.inspect()
-    # {hallway, levels, score} = move_from_level("D", 4, 1, 5, hallway, levels, score) |> IO.inspect()
-    # {hallway, levels, score} = move_from_hallway("B", 3, 4, {hallway, levels, score}) |> IO.inspect()
-    # {hallway, levels, score} = move_rooms("B", {2, 0}, {4, 0}, {hallway, levels, score}) |> IO.inspect()
-    # {hallway, levels, score} = move_from_level("D", 8, 0, 7, hallway, levels, score) |> IO.inspect()
-    # {hallway, levels, score} = move_from_level("A", 8, 1, 9, hallway, levels, score) |> IO.inspect()
-    # {hallway, levels, score} = move_from_hallway("D", 7, 8, {hallway, levels, score}) |> IO.inspect()
-    # {hallway, levels, score} = move_from_hallway("D", 5, 8, {hallway, levels, score}) |> IO.inspect()
-    # {hallway, levels, score} = move_from_hallway("A", 9, 2, {hallway, levels, score}) |> IO.inspect()
-    # find_available_rooms(["B", "C", "#", "D", "#", "D", "#", ".", "#", ".", "A"], 5) |> IO.inspect()
     go(hallway, levels, 0, 9999999999)
-    # |> IO.inspect()
   end
 
   def go(hallway, levels, score, min_score) do
@@ -74,7 +39,7 @@ defmodule Solution do
       if score > min_score do
         {:not_found}
       else
-      # print({hallway, levels, score}, label: "start")
+      print({hallway, levels, score}, label: "result")
       {hallway, levels, score} =
         0..8 |> Enum.reduce_while({hallway, levels, score}, fn _, {hallway, levels, score} ->
           result =
@@ -83,7 +48,6 @@ defmodule Solution do
                 desired_room = @rooms[pod]
                 other_pods_in_room = Enum.at(levels, desired_room) |> Enum.count(fn p -> p != pod && p != "." end)
                 available = find_available_rooms(hallway, index)
-                # IO.inspect({pod, other_pods_in_room}, label: "other_pods_in_room")
                 if other_pods_in_room == 0 && desired_room in available do
                   move_from_hallway(pod, index, desired_room, {hallway, levels, score})
                 else
@@ -96,11 +60,9 @@ defmodule Solution do
           if result == {hallway, levels, score} do
             {:halt, result}
           else
-            # IO.inspect("CHANGED")
             {:cont, result}
           end
         end)
-      # print({hallway, levels, score}, label: "after hollway")
 
       {hallway, levels, score} =
         @rooms |> Map.values() |> Enum.reduce({hallway, levels, score}, fn index, {hallway, levels, score} ->
@@ -119,51 +81,6 @@ defmodule Solution do
                 {hallway, levels, score}
               end
           end
-          #
-          # case room do
-          #   [".", ".", ".", "."] -> {hallway, levels, score}
-          #   [".", pod] ->
-          #     desired_room_index = @rooms[pod]
-          #     desired_room = Enum.at(levels, desired_room_index)
-          #     available = find_available_rooms(hallway, index)
-          #     if desired_room_index != index && desired_room_index in available do
-          #       case desired_room do
-          #         [".", "."] ->
-          #           IO.inspect("move rooms 1")
-          #           move_rooms(pod, {index, 1}, {desired_room_index, 1}, {hallway, levels, score})
-          #
-          #         [".", ^pod] ->
-          #           IO.inspect(desired_room, label: "move rooms 2")
-          #           move_rooms(pod, {index, 1}, {desired_room_index, 0}, {hallway, levels, score})
-          #
-          #         _ ->
-          #           {hallway, levels, score}
-          #       end
-          #     else
-          #       {hallway, levels, score}
-          #     end
-          #
-          #   [pod, pod2] ->
-          #     desired_room_index = @rooms[pod]
-          #     desired_room = Enum.at(levels, desired_room_index)
-          #     available = find_available_rooms(hallway, index)
-          #     if desired_room_index != index && desired_room_index in available do
-          #       case desired_room do
-          #         [".", "."] ->
-          #           IO.inspect("move rooms 3")
-          #           move_rooms(pod, {index, 0}, {desired_room_index, 1}, {hallway, levels, score})
-          #
-          #         [".", ^pod] ->
-          #           IO.inspect("move rooms 4")
-          #           move_rooms(pod, {index, 0}, {desired_room_index, 0}, {hallway, levels, score})
-          #
-          #         _ ->
-          #           {hallway, levels, score}
-          #       end
-          #     else
-          #       {hallway, levels, score}
-          #     end
-          # end
         end)
 
       if !found(levels) do
@@ -303,7 +220,6 @@ defmodule Solution do
   end
 
   def move_from_hallway(pod, hallway_pos, desired_room, {hallway, levels, score}) do
-    # IO.inspect("move_from_hallway #{pod}")
     good_pods_in_room = Enum.at(levels, desired_room) |> Enum.count(fn p -> p == pod end)
     steps = abs(desired_room - hallway_pos)
     depth = 4 - good_pods_in_room
@@ -311,7 +227,6 @@ defmodule Solution do
     level = Enum.at(levels, desired_room)
     levels = List.replace_at(levels, desired_room, List.replace_at(level, depth - 1, pod))
     score = score + (steps + depth) * @scores[pod]
-    # IO.inspect({hallway, levels, score}, label: "after hallway")
     {hallway, levels, score} |> check("move_from_hallway")
   end
 
